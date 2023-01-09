@@ -19,13 +19,13 @@ export const contactSlice = createSlice({
     addItems: (state, {payload}) => {
       state.items.push(payload);
     },
-    delItems: (state, {payload}) => {
+    deleteItems: (state, {payload}) => {
       state.items = state.items.filter(item => item.id !== payload);
     },
     updateFilter: (state, {payload}) => {state.filter = payload},
   },
 });
 
-export const {addItems, delItems, updateFilter} = contactSlice.actions;
+export const {addItems, deleteItems, updateFilter} = contactSlice.actions;
 
 export const persistedReducer = persistReducer(persistConfig, contactSlice.reducer);
