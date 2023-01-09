@@ -141,6 +141,10 @@ export function ContactForm () {
 //     )
 // }
 
+//     ContactForm.propTypes = {
+//     onSubmit: PropTypes.func.isRequired,
+// };
+
 //====================================WAS=====================================//
 
 // import PropTypes from 'prop-types';
