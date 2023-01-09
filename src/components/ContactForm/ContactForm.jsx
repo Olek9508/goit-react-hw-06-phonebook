@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
@@ -77,9 +76,7 @@ export function ContactForm () {
     )
 }
   
-    ContactForm.propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-};
+
   
 //====================================WAS=====================================//
 

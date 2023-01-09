@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { updateFilter } from 'redux/Actions';
 import { Form, Label, Input } from './Filter.styled';
 
@@ -9,7 +8,7 @@ export const Filter = () => {
 
   const changeFilter = e => {
     dispatch(updateFilter(e.currentTarget.value));
-    console.log(e.currentTarget.value)
+    // console.log(e.currentTarget.value)
   };
 
       return (
@@ -22,9 +21,4 @@ export const Filter = () => {
           </Label>
         </Form>
         )
-}
-    
-Filter.propTypes = {
-  value:PropTypes.string.isRequired,
-  onChange:PropTypes.func.isRequired
 }
