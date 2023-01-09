@@ -26,10 +26,12 @@ export const ContactList = () => {
               </li>
             ))
             )
-       : (<p>We did not find mentioned person in your phonebook, please, try again</p>)
+       : (<p>Contact is not found</p>)
       }
 </ul>)
 }
+
+
 
 
 //================================WAS===================================//
@@ -41,10 +43,20 @@ export const ContactList = () => {
 //             <ContactItem
 //             key={id}
 //             name = {name}
-//             number = {number}    
+//             number = {number}
 //             onDeleteContact = {()=>onDeleteContact(id)}
 //             />
-//         )}    
+//         )}
 //     </ul>
 // )
+// }
+
+// ContactList.propTypes = {
+//     contacts: PropTypes.arrayOf(
+//     PropTypes.exact({
+//     id: PropTypes.string.isRequired,
+//     name: PropTypes.string.isRequired,
+//     number:PropTypes.string.isRequired})
+//     ),
+//     onDeleteContact:PropTypes.func.isRequired,
 // }
