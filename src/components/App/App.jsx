@@ -1,3 +1,26 @@
+// import { ContactForm } from "components/ContactForm/ContactForm";
+// import { Filter } from "components/Filter/Filter";
+// import { ContactList } from "components/ContactList/ContactList";
+// import { Container, InnerContainer, Title } from './App.styled';
+
+// export const App = () => {
+//   return (
+//     <Container>
+//       <InnerContainer>
+//         <Title>Phonebook</Title>
+//         <ContactForm />
+//         <Title>Contacts: </Title>
+//         <Filter></Filter>
+//         <ContactList></ContactList>
+//       </InnerContainer>
+//   </Container>
+//   )
+// }
+
+import React from 'react';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from 'redux/store';
+import { Provider } from 'react-redux';
 import { ContactForm } from "components/ContactForm/ContactForm";
 import { Filter } from "components/Filter/Filter";
 import { ContactList } from "components/ContactList/ContactList";
@@ -5,17 +28,25 @@ import { Container, InnerContainer, Title } from './App.styled';
 
 export const App = () => {
   return (
-    <Container>
-      <InnerContainer>
-        <Title>Phonebook</Title>
-        <ContactForm />
-        <Title>Contacts: </Title>
-        <Filter></Filter>
-        <ContactList></ContactList>
-      </InnerContainer>
-  </Container>
-  )
-}
+    <>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <Container>
+            <InnerContainer>
+              <Title>Phonebook</Title>
+              <ContactForm />
+              <Title>Contacts</Title>
+              <Filter />
+              <ContactList />
+            </InnerContainer>
+          </Container>
+        </PersistGate>
+      </Provider>
+    </>
+  );
+};
+
+export default App;
 
 
 

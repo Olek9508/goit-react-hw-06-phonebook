@@ -1,65 +1,57 @@
-import { useState } from 'react';
+import React from 'react';
+import { nanoid } from 'nanoid';
+import { Formik, Field } from 'formik';
 import { useDispatch } from 'react-redux';
-import { addContact } from 'redux/ContactSlice';
-import { BtnSubmit, Form, Label, Input } from "./ContactForm.styled";
+import { addContact } from 'redux/contactsSlice';
+import { FormBox, Label, Input, BtnSubmit} from './ContactForm.styled';
 
+export const ContactForm = () => {
+  const inputNameId = nanoid();
+  const inputTelId = nanoid();
 
-
-export function ContactForm() {
-  const dispatch = useDispatch();
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-
-  const handleInputChange = ({ currentTarget: { name, value } }) => {
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-      case 'number':
-        setNumber(value);
-        break;
-      default:
-        return;
-    }
+  const initualValues = {
+    name: '',
+    number: '',
   };
 
-  const onFormSubmit = e => {
-    e.preventDefault();
-    dispatch(addContact({ name, number }));
-    setName('');
-    setNumber('');
+  const dispatch = useDispatch();
+
+  const handleOnSubmit = (values, { resetForm }) => {
+    dispatch(addContact(values));
+    resetForm();
   };
 
   return (
-    <Form onSubmit={onFormSubmit}>
-      <Label>
-        Name : 
-        <Input
-          onChange={handleInputChange}
-          value={name}
+    <Formik initialValues={initualValues} onSubmit={handleOnSubmit}>
+      <FormBox>
+        <Label htmlFor={inputNameId}>Name</Label>
+        <Field
+          id={inputNameId}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          as={Input}
           required
         />
-        Number
-        <Input
-          onChange={handleInputChange}
-          value={number}
+        <Label htmlFor={inputTelId}>Number</Label>
+        <Field
+          id={inputTelId}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          as={Input}
           required
         />
-        <BtnSubmit
-          type="submit"
-          disabled={number && name ? false : true}>Add Contact</BtnSubmit>
-      </Label>
-    </Form>
+        <BtnSubmit type="submit">Add contact</BtnSubmit>
+      </FormBox>
+    </Formik>
   );
-}
+};
+
+
+
 
 //=================================================WAS==============================//
 // import { nanoid } from 'nanoid';

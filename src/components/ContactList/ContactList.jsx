@@ -1,24 +1,47 @@
-import { useSelector } from 'react-redux';
-import { ContactItem } from './ContactItem';
+import { useSelector, useDispatch } from 'react-redux';
+import { getContacts, getFilterValue } from 'redux/selectors';
+import { deleteContact } from 'redux/contactsSlice';
+import { BtnDelete, Text } from './Contact.styled';
 
-export function ContactList() {
-  const contacts = useSelector(state => state.contacts);
-  const filter = useSelector(state => state.filter);
+export const ContactList = () => {
+  const dispatch = useDispatch();
+  const { contacts } = useSelector(getContacts);
+  const filter = useSelector(getFilterValue);
 
-  const list = () => {
+  const filterContactsOnChange = () => {
+    if (!filter) {
+      return contacts;
+    }
     return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter)
+      contact.name.toUpperCase().includes(filter.toUpperCase())
     );
   };
 
+  const sortContactsByName = () =>
+    [...filterContactsOnChange()].sort((firstContact, secondContact) =>
+      firstContact.name.localeCompare(secondContact.name)
+    );
+
   return (
-    <ul >
-      {list().map(({ name, number, id }, idx) => (
-        <ContactItem key={id} idx={idx} name={name} number={number} id={id} />
+    <ul>
+      {sortContactsByName().map(({ id, name, number }) => (
+        <li key={id}>
+          <Text>Name: {name}</Text>
+          <Text>Number: {number}</Text>
+          <BtnDelete
+            type="button"
+            onClick={() => {
+              dispatch(deleteContact(id));
+            }}
+          >
+            Delete contact
+          </BtnDelete>
+          </li>
       ))}
-    </ul>
+      </ul>
   );
-}
+};
+
 
 
 

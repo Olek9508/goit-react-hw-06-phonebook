@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilterValue } from 'redux/FilterSlice';
-import { getFilterValue } from 'redux/Selectors';
-import { Form, Label, Input } from './Filter.styled';
+import { setFilterValue } from 'redux/filterSlice';
+import { getFilterValue } from 'redux/selectors';
+import { Label, Input } from './Filter.styled';
 
 export const Filter = () => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ export const Filter = () => {
   };
 
   return (
-    <Form>
+    <>
       <Label>Find contacts by name</Label>
       <Input
         type="text"
@@ -23,7 +23,7 @@ export const Filter = () => {
         title="Search field"
         required
       />
-    </Form>
+      </>
   );
 };
 
