@@ -1,35 +1,60 @@
 import { useSelector } from 'react-redux';
-import { ContactItem } from "./ContactItem"
+import { ContactItem } from './ContactItem';
 
-const filterContacts = (items, value) => {
-return items.filter(contact =>
-  contact.name.toLowerCase().includes(value.toLowerCase())
-);
-};
+export function ContactList() {
+  const contacts = useSelector(state => state.contacts);
+  const filter = useSelector(state => state.filter);
 
-export const ContactList = () => {
-  const items  = useSelector(state => state.contacts.items);
-  const value = useSelector(state => state.contacts.filter);
-  const contacts = filterContacts(items, value);
+  const list = () => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter)
+    );
+  };
 
   return (
-  <ul>
-      { contacts.length
-       ? (
-            contacts.map(({id, name, number}) => (
-              <li key={id}>
-                <ContactItem
-                  id={id}
-                  name={name}
-                  number={number}
-                />
-              </li>
-            ))
-            )
-       : (<p>Contact is not found</p>)
-      }
-</ul>)
+    <ul >
+      {list().map(({ name, number, id }, idx) => (
+        <ContactItem key={id} idx={idx} name={name} number={number} id={id} />
+      ))}
+    </ul>
+  );
 }
+
+
+
+//====================================WAS==========================//
+// import { useSelector } from 'react-redux';
+// import { ContactItem } from "./ContactItem"
+
+// const filterContacts = (items, value) => {
+// return items.filter(contact =>
+//   contact.name.toLowerCase().includes(value.toLowerCase())
+// );
+// };
+
+// export const ContactList = () => {
+//   const items  = useSelector(state => state.contacts.items);
+//   const value = useSelector(state => state.contacts.filter);
+//   const contacts = filterContacts(items, value);
+
+//   return (
+//   <ul>
+//       { contacts.length
+//        ? (
+//             contacts.map(({id, name, number}) => (
+//               <li key={id}>
+//                 <ContactItem
+//                   id={id}
+//                   name={name}
+//                   number={number}
+//                 />
+//               </li>
+//             ))
+//             )
+//        : (<p>Contact is not found</p>)
+//       }
+// </ul>)
+// }
 
 
 

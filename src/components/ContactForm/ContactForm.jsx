@@ -1,17 +1,16 @@
-import { nanoid } from 'nanoid';
-import { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { addItems } from 'redux/Actions';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addContact } from 'redux/ContactSlice';
 import { BtnSubmit, Form, Label, Input } from "./ContactForm.styled";
 
-export function ContactForm () {
+
+
+export function ContactForm() {
+  const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const dispatch = useDispatch();
-  const  items  = useSelector(state => state.contacts.items);
 
-  const handleChange = e => {
-    const {name, value} = e.currentTarget;
+  const handleInputChange = ({ currentTarget: { name, value } }) => {
     switch (name) {
       case 'name':
         setName(value);
@@ -24,57 +23,123 @@ export function ContactForm () {
     }
   };
 
-  const handleSubmit = e => {
+  const onFormSubmit = e => {
     e.preventDefault();
-    const contact = {
-      id: nanoid(),
-      name,
-      number,
-    };
-    if (items.some(contact => contact.name.toLowerCase() === name.toLowerCase())) {
-      return alert(`${contact.name} is already in contacts`);
-    }
-    dispatch(addItems(contact));
-    resetForm();
-  }
-
-  const resetForm = () => {
+    dispatch(addContact({ name, number }));
     setName('');
     setNumber('');
-  }
+  };
 
-    return (
-      <Form onSubmit={handleSubmit}>
-        <Label>
-          Name :
-          <Input
-            type="text"
-            name="name"
-            value={name}
-            onChange={handleChange}
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-          />
-        </Label>
-        <Label>
-          Number :
-          <Input
-            type="tel"
-            name="number"
-            value={number}
-            onChange={handleChange}
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-          />
-        </Label>
-        <BtnSubmit type="submit">
-          Add contact
-        </BtnSubmit>
-      </Form>
-    )
+  return (
+    <Form onSubmit={onFormSubmit}>
+      <Label>
+        Name : 
+        <Input
+          onChange={handleInputChange}
+          value={name}
+          type="text"
+          name="name"
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          required
+        />
+        Number
+        <Input
+          onChange={handleInputChange}
+          value={number}
+          type="tel"
+          name="number"
+          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          required
+        />
+        <BtnSubmit
+          type="submit"
+          disabled={number && name ? false : true}>Add Contact</BtnSubmit>
+      </Label>
+    </Form>
+  );
 }
+
+//=================================================WAS==============================//
+// import { nanoid } from 'nanoid';
+// import { useState } from "react";
+// import { useDispatch, useSelector } from 'react-redux';
+// import { addItems } from 'redux/ContactSlice';
+// import { BtnSubmit, Form, Label, Input } from "./ContactForm.styled";
+
+// export function ContactForm () {
+//   const [name, setName] = useState('');
+//   const [number, setNumber] = useState('');
+//   const dispatch = useDispatch();
+//   const  items  = useSelector(state => state.contacts.items);
+
+//   const handleChange = e => {
+//     const {name, value} = e.currentTarget;
+//     switch (name) {
+//       case 'name':
+//         setName(value);
+//         break;
+//       case 'number':
+//         setNumber(value);
+//         break;
+//       default:
+//         return;
+//     }
+//   };
+
+//   const handleSubmit = e => {
+//     e.preventDefault();
+//     const contact = {
+//       id: nanoid(),
+//       name,
+//       number,
+//     };
+//     if (items.some(contact => contact.name.toLowerCase() === name.toLowerCase())) {
+//       return alert(`${contact.name} is already in contacts`);
+//     }
+//     dispatch(addItems(contact));
+//     resetForm();
+//   }
+
+//   const resetForm = () => {
+//     setName('');
+//     setNumber('');
+//   }
+
+//     return (
+//       <Form onSubmit={handleSubmit}>
+//         <Label>
+//           Name :
+//           <Input
+//             type="text"
+//             name="name"
+//             value={name}
+//             onChange={handleChange}
+//             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+//             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+//             required
+//           />
+//         </Label>
+//         <Label>
+//           Number :
+//           <Input
+//             type="tel"
+//             name="number"
+//             value={number}
+//             onChange={handleChange}
+//             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+//             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+//             required
+//           />
+//         </Label>
+//         <BtnSubmit type="submit">
+//           Add contact
+//         </BtnSubmit>
+//       </Form>
+//     )
+// }
+
   
 
   
