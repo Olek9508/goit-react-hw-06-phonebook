@@ -1,22 +1,3 @@
-// import { ContactForm } from "components/ContactForm/ContactForm";
-// import { Filter } from "components/Filter/Filter";
-// import { ContactList } from "components/ContactList/ContactList";
-// import { Container, InnerContainer, Title } from './App.styled';
-
-// export const App = () => {
-//   return (
-//     <Container>
-//       <InnerContainer>
-//         <Title>Phonebook</Title>
-//         <ContactForm />
-//         <Title>Contacts: </Title>
-//         <Filter></Filter>
-//         <ContactList></ContactList>
-//       </InnerContainer>
-//   </Container>
-//   )
-// }
-
 import React from 'react';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from 'redux/Store';
@@ -207,3 +188,25 @@ export default App;
 //     )
 //   }
 // };
+
+
+//======================================WAS====================================//
+
+// import { ContactForm } from "components/ContactForm/ContactForm";
+// import { Filter } from "components/Filter/Filter";
+// import { ContactList } from "components/ContactList/ContactList";
+// import { Container, InnerContainer, Title } from './App.styled';
+
+// export const App = () => {
+//   return (
+//     <Container>
+//       <InnerContainer>
+//         <Title>Phonebook</Title>
+//         <ContactForm />
+//         <Title>Contacts: </Title>
+//         <Filter></Filter>
+//         <ContactList></ContactList>
+//       </InnerContainer>
+//   </Container>
+//   )
+// }
